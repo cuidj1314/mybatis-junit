@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybaisjunit.mapper.VisitorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.mybaisjunit.domain.VisitorDo">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+        <result column="device_code" jdbcType="VARCHAR" property="deviceCode"/>
+    </resultMap>
+
+    <select id="insertQuery" resultMap="BaseResultMap">
+        SELECT
+        mvisitor.id,
+        mvisitor.created_time,
+        mvisitor.updated_time,
+        mvisitor.device_code
+        FROM visitor mvisitor
+        <where>
+            <if test="deviceCode != null and deviceCode != ''">
+                AND mvisitor.device_code = #{deviceCode}
+            </if>
+        </where>
+        ORDER BY mvisitor.created_time DESC
+    </select>
+</mapper>
